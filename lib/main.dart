@@ -4,64 +4,41 @@ import 'dart:math';
 void main() {
   runApp(MaterialApp(
     home: Scaffold(
-      backgroundColor: Colors.red,
-      appBar: AppBar(title: Text('Dice'), backgroundColor: Colors.red),
-      body: DicePage(),
+      backgroundColor: Colors.lightBlue,
+      appBar:
+          AppBar(title: Text('Ask Me Anything'), backgroundColor: Colors.blue),
+      body: EightBall(),
     ),
   ));
 }
 
-class DicePage extends StatefulWidget {
-  const DicePage({Key? key}) : super(key: key);
+class EightBall extends StatefulWidget {
+  const EightBall({Key? key}) : super(key: key);
 
   @override
-  State<DicePage> createState() => _DicePageState();
+  State<EightBall> createState() => _EightBallState();
 }
 
-class _DicePageState extends State<DicePage> {
-  var leftDiceNumber = 1;
-  var rightDiceNumber = 1;
+class _EightBallState extends State<EightBall> {
+  var ballNumber = 1;
 
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
-        children: [
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                changeDice();
-              },
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.all(16),
-                ),
-              ),
-              child: Image.asset('images/dice$leftDiceNumber.png'),
-            ),
-          ),
-          Expanded(
-            child: TextButton(
-              onPressed: () {
-                changeDice();
-              },
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                  EdgeInsets.all(16),
-                ),
-              ),
-              child: Image.asset('images/dice$rightDiceNumber.png'),
-            ),
-          )
-        ],
+      child: Container(
+        child: TextButton(
+          onPressed: () {
+            changeAnswer();
+          },
+          child: Image.asset('images/balls/ball$ballNumber.png'),
+        ),
       ),
     );
   }
 
-  void changeDice() {
+  void changeAnswer() {
     setState(() {
-      leftDiceNumber = Random().nextInt(6) + 1;
-      rightDiceNumber = Random().nextInt(6) + 1;
+      ballNumber = Random().nextInt(5) + 1;
     });
   }
 }

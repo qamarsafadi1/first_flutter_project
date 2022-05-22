@@ -35,6 +35,7 @@ flutter:
   uses-material-design: true
   assets:
     - images/
+    - images/balls/
   fonts:
     - family: Pacifico
       fonts:
