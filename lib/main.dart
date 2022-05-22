@@ -1,44 +1,52 @@
 import 'package:flutter/material.dart';
-import 'dart:math';
+import 'package:english_words/english_words.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
-      backgroundColor: Colors.lightBlue,
-      appBar:
-          AppBar(title: Text('Ask Me Anything'), backgroundColor: Colors.blue),
-      body: EightBall(),
-    ),
-  ));
+  runApp(XylophoneApp());
 }
 
-class EightBall extends StatefulWidget {
-  const EightBall({Key? key}) : super(key: key);
+class XylophoneApp extends StatelessWidget {
+  const XylophoneApp({Key? key}) : super(key: key);
 
-  @override
-  State<EightBall> createState() => _EightBallState();
-}
+  void playSound(int soundNumber) {
+    final player = AudioCache();
+    player.play('assets_note$soundNumber.wav');
+  }
 
-class _EightBallState extends State<EightBall> {
-  var ballNumber = 1;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        child: TextButton(
+  Expanded buildKeys({required int soundNumber, required MaterialColor color}) {
+    return Expanded(
+      child: TextButton(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(color),
+          ),
           onPressed: () {
-            changeAnswer();
+            playSound(soundNumber);
           },
-          child: Image.asset('images/balls/ball$ballNumber.png'),
-        ),
-      ),
+          child: Text('')),
     );
   }
 
-  void changeAnswer() {
-    setState(() {
-      ballNumber = Random().nextInt(5) + 1;
-    });
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              buildKeys(soundNumber: 1, color: Colors.red),
+              buildKeys(soundNumber: 2, color: Colors.orange),
+              buildKeys(soundNumber: 3, color: Colors.yellow),
+              buildKeys(soundNumber: 4, color: Colors.green),
+              buildKeys(soundNumber: 5, color: Colors.teal),
+              buildKeys(soundNumber: 6, color: Colors.blue),
+              buildKeys(soundNumber: 7, color: Colors.purple),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
