@@ -1,10 +1,14 @@
+import 'package:first_flutter_project/model/CalculaterBrain.dart';
+import 'package:first_flutter_project/screens/result_page.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../components/bottom_button_widget.dart';
+import '../components/card_container_widget.dart';
 import '../model/Gender.dart';
 import '../utils/constants.dart';
-import '../widgets/card_container_widget.dart';
-import '../widgets/gender_widget.dart';
+import '../components/counter_widget.dart';
+import '../components/gender_widget.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -13,28 +17,9 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   Gender? selectedGender;
-  int height = 180;
-  // Color femaleColor = inactiveCardColor;
-  // Color maleColor = inactiveCardColor;
-  //
-  // void updateColor(Gender selectedGender) {
-  //   if (selectedGender == Gender.MALE) {
-  //     if (maleColor == inactiveCardColor) {
-  //       maleColor = activeCardColor;
-  //       femaleColor = inactiveCardColor;
-  //     } else {
-  //       maleColor = inactiveCardColor;
-  //     }
-  //   }
-  //   if (selectedGender == Gender.FEMALE) {
-  //     if (femaleColor == inactiveCardColor) {
-  //       femaleColor = activeCardColor;
-  //       maleColor = inactiveCardColor;
-  //     } else {
-  //       femaleColor = inactiveCardColor;
-  //     }
-  //   }
-  // }
+  int height = 156;
+  int weight = 36;
+  int age = 20;
 
   @override
   Widget build(BuildContext context) {
@@ -108,17 +93,26 @@ class _InputPageState extends State<InputPage> {
                       )
                     ],
                   ),
-                  Slider(
-                    value: height.toDouble(),
-                    min: 120,
-                    max: 220,
-                    activeColor: Colors.pinkAccent,
-                    inactiveColor: Colors.grey,
-                    onChanged: (newValue) {
-                      setState(() {
-                        height = newValue.round();
-                      });
-                    },
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor: Colors.grey,
+                        thumbColor: Colors.pinkAccent,
+                        overlayColor: Color(0x29EB1555),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0)),
+                    child: Slider(
+                      value: height.toDouble(),
+                      min: 120,
+                      max: 220,
+                      onChanged: (newValue) {
+                        setState(() {
+                          height = newValue.round();
+                        });
+                      },
+                    ),
                   )
                 ],
               ),
@@ -128,23 +122,38 @@ class _InputPageState extends State<InputPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: CardContainer(
-                    color: kActiveCardColor,
+                  child: CounterWidget(
+                    title: 'WEIGHT',
+                    valueOf: weight,
+                    onClick: () {
+                      setState(() {
+                        weight++;
+                      });
+                    },
                   ),
                 ),
                 Expanded(
-                  child: CardContainer(
-                    color: kActiveCardColor,
-                  ),
+                  child: CounterWidget(
+                      title: 'AGE',
+                      valueOf: age,
+                      onClick: () {
+                        setState(() {
+                          age++;
+                        });
+                      }),
                 ),
               ],
             ),
           ),
-          Container(
-            width: double.infinity,
-            height: kBottomHeight,
-            color: kBottomButtonColor,
-          )
+          BottomButton(
+              title: 'CALCULATE',
+              onClick: () {
+                CalculaterBrain calc =
+                    CalculaterBrain(weight: weight, height: height);
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return ResultPage(calculaterBrain: calc);
+                }));
+              }),
         ],
       ),
     );
