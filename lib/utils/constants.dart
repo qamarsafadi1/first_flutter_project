@@ -5,7 +5,9 @@ const kActiveCardColor = Color(0xFF1D1E33);
 const kInactiveCardColor = Color(0xFF111328);
 const kBottomButtonColor = Colors.pinkAccent;
 const kApiKey = '271ad9cd074bea5c568c0d80d57ef676';
+const kApiKeyCoin = 'C9B0DFE8-56FF-4CC9-BC0C-CC0AC80FB0DC';
 const kOpenWeatherMapUrl = 'https://api.openweathermap.org/data/2.5/weather';
+const kCoinUrl = 'https://rest.coinapi.io/v1/exchangerate';
 
 const kTextStyle = TextStyle(
   fontSize: 18.0,
